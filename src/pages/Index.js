@@ -17,7 +17,6 @@ export default function Index() {
       const response = await axios.get(
         `https://api.dynoacademy.com/test-api/v1/movies?search=${searchText}`
       );
-      // console.log(response);
       const moviesData = response.data.moviesData;
       setMovies(moviesData);
       setIsError(false);
@@ -47,7 +46,7 @@ export default function Index() {
         } else {
           setSearchError("Enter at least 3 Characters!!");
         }
-      }, 1500);
+      }, 2000);
 
       return () => {
         clearTimeout(fetchTimer);
@@ -56,29 +55,17 @@ export default function Index() {
   }, [searchText]);
   return (
     <>
-      <div>
-        <Link to={`/add_movie/`}>Add a Movie</Link> <br />
-        {localStorage.getItem("accessToken") ? (
-          <>
-            <Link to={`/profile`}>Profile</Link>
-          </>
-        ) : (
-          <>
-            <Link to={`/login`}>Login</Link>
-          </>
-        )}
+      <div className="navbar">
+        <h3>Suggested Movies</h3>
+        <input
+          type="text"
+          value={searchText}
+          placeholder="Enter Movie Name Here"
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <br />
+        <span style={{ color: "red" }}>{searchError}</span>
       </div>
-      <h3>Suggested Movies</h3>
-      {/* <button onClick={fetchMovies}>Get all movies</button> */}
-      <input
-        type="text"
-        value={searchText}
-        placeholder="Enter Movie Name Here"
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <span style={{ color: "red" }}>{searchError}</span>
-      <br />
-      <br />
 
       {isError ? (
         <>
